@@ -81,6 +81,10 @@ public:
         devList.clear();
         devListTxt = "";
 
+        if (core::args["type"].i() != TYPE_AIRSPY) {
+            return;
+        }
+
         int devFdArg = core::args["device"].i();
         if (devFdArg == -1) {
 #ifndef __ANDROID__

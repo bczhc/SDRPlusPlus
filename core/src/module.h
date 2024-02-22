@@ -100,4 +100,7 @@ public:
     std::map<std::string, ModuleManager::Instance_t> instances;
 };
 
+#define TYPE_AIRSPY 0
+#define TYPE_AIRSPY_HF 1
+
 #define SDRPP_MOD_INFO MOD_EXPORT const ModuleManager::ModuleInfo_t _INFO_
