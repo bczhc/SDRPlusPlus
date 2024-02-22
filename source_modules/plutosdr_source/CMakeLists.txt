@@ -14,13 +14,13 @@ if (MSVC)
     target_link_libraries(plutosdr_source PRIVATE libad9361)
 elseif (ANDROID)
     target_include_directories(plutosdr_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/include
+        ${CMAKE_SOURCE_DIR}/sdr-kit/${ANDROID_ABI}/include
     )
 
     target_link_libraries(plutosdr_source PUBLIC
-        /sdr-kit/${ANDROID_ABI}/lib/libxml2.so
-        /sdr-kit/${ANDROID_ABI}/lib/libiio.so
-        /sdr-kit/${ANDROID_ABI}/lib/libad9361.so
+        ${CMAKE_SOURCE_DIR}/sdr-kit/${ANDROID_ABI}/lib/libxml2.so
+        ${CMAKE_SOURCE_DIR}/sdr-kit/${ANDROID_ABI}/lib/libiio.so
+        ${CMAKE_SOURCE_DIR}/sdr-kit/${ANDROID_ABI}/lib/libad9361.so
     )
 else (MSVC)
     if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
