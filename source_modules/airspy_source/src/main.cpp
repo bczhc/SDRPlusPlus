@@ -9,7 +9,7 @@
 #include <gui/smgui.h>
 #include <airspy.h>
 
-#if defined(__ANDROID__) && !defined(TERMUX)
+#ifdef __ANDROID__
 #include <android_backend.h>
 #endif
 
@@ -78,35 +78,47 @@ public:
     }
 
     void refresh() {
+        int devFdArg = core::args["device"].i();
+        if (devFdArg == -1) {
 #ifndef __ANDROID__
-        devList.clear();
-        devListTxt = "";
+            devList.clear();
+            devListTxt = "";
 
-        uint64_t serials[256];
-        int n = airspy_list_devices(serials, 256);
+            uint64_t serials[256];
+            int n = airspy_list_devices(serials, 256);
 
-        char buf[1024];
-        for (int i = 0; i < n; i++) {
-            sprintf(buf, "%016" PRIX64, serials[i]);
-            devList.push_back(serials[i]);
-            devListTxt += buf;
+            char buf[1024];
+            for (int i = 0; i < n; i++) {
+                sprintf(buf, "%016" PRIX64, serials[i]);
+                devList.push_back(serials[i]);
+                devListTxt += buf;
+                devListTxt += '\0';
+            }
+#else
+            // Check for device presence
+            int vid, pid;
+
+            devFd = backend::getDeviceFD(vid, pid, backend::AIRSPY_VIDPIDS);
+            if (devFd < 0) { return; }
+
+            // Get device info
+            std::string fakeName = "Airspy USB";
+            devList.push_back(0xDEADBEEF);
+            devListTxt += fakeName;
+            devListTxt += '\0';
+#endif
+        } else {
+            devFd = devFdArg;
+            flog::info("Use device FD: {0}", devFd);
+
+            if (devFd < 0) { return; }
+
+            // Get device info
+            std::string fakeName = "Airspy USB";
+            devList.push_back(0xDEADBEEF);
+            devListTxt += fakeName;
             devListTxt += '\0';
         }
-#else
-        // Check for device presence
-        int vid, pid;
-
-        devFd = getDeviceFd();
-        flog::info("Use device FD: {0}", devFd);
-
-        if (devFd < 0) { return; }
-
-        // Get device info
-        std::string fakeName = "Airspy USB";
-        devList.push_back(0xDEADBEEF);
-        devListTxt += fakeName;
-        devListTxt += '\0';
-#endif
     }
 
     void selectFirst() {
@@ -570,17 +582,6 @@ private:
         memcpy(_this->stream.writeBuf, transfer->samples, transfer->sample_count * sizeof(dsp::complex_t));
         if (!_this->stream.swap(transfer->sample_count)) { return -1; }
         return 0;
-    }
-
-    int getDeviceFd() {
-#ifdef __ANDROID__
-
-#ifdef TERMUX
-#else
-        devFd = backend::getDeviceFD(vid, pid, backend::AIRSPY_VIDPIDS);
-#endif
-        devFd = core::args["device"].i();
-#endif
     }
 
     std::string name;
