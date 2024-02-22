@@ -3,6 +3,8 @@ SDR++
 
 Start Airspy(HF) SDR++ Server in Termux
 
+<img src="https://github.com/bczhc/SDRPlusPlus/assets/49330580/c59beee9-4340-4e43-8465-36fa8dd39270" style="width: 50%">
+
 # Build
 
 1. Clone
