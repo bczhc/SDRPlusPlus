@@ -9,7 +9,7 @@
 #include <gui/smgui.h>
 #include <airspy.h>
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) && !defined(TERMUX)
 #include <android_backend.h>
 #endif
 
@@ -95,7 +95,10 @@ public:
 #else
         // Check for device presence
         int vid, pid;
-        devFd = backend::getDeviceFD(vid, pid, backend::AIRSPY_VIDPIDS);
+
+        devFd = getDeviceFd();
+        flog::info("Use device FD: {0}", devFd);
+
         if (devFd < 0) { return; }
 
         // Get device info
@@ -567,6 +570,17 @@ private:
         memcpy(_this->stream.writeBuf, transfer->samples, transfer->sample_count * sizeof(dsp::complex_t));
         if (!_this->stream.swap(transfer->sample_count)) { return -1; }
         return 0;
+    }
+
+    int getDeviceFd() {
+#ifdef __ANDROID__
+
+#ifdef TERMUX
+#else
+        devFd = backend::getDeviceFD(vid, pid, backend::AIRSPY_VIDPIDS);
+#endif
+        devFd = core::args["device"].i();
+#endif
     }
 
     std::string name;
