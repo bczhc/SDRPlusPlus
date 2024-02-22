@@ -82,29 +82,41 @@ public:
         devList.clear();
         devListTxt = "";
 
+        int devFdArg = core::args["device"].i();
+        if (devFdArg == -1) {
 #ifndef __ANDROID__
-        uint64_t serials[256];
-        int n = airspyhf_list_devices(serials, 256);
+            uint64_t serials[256];
+            int n = airspyhf_list_devices(serials, 256);
 
-        char buf[1024];
-        for (int i = 0; i < n; i++) {
-            sprintf(buf, "%016" PRIX64, serials[i]);
-            devList.push_back(serials[i]);
-            devListTxt += buf;
+            char buf[1024];
+            for (int i = 0; i < n; i++) {
+                sprintf(buf, "%016" PRIX64, serials[i]);
+                devList.push_back(serials[i]);
+                devListTxt += buf;
+                devListTxt += '\0';
+            }
+#else
+            // Check for device presence
+            int vid, pid;
+            devFd = backend::getDeviceFD(vid, pid, backend::AIRSPYHF_VIDPIDS);
+            if (devFd < 0) { return; }
+
+            // Get device info
+            std::string fakeName = "Airspy HF+ USB";
+            devList.push_back(0xDEADBEEF);
+            devListTxt += fakeName;
+            devListTxt += '\0';
+#endif
+        } else {
+            devFd = devFdArg;
+            flog::info("Use device FD: {0}", devFd);
+            if (devFd < 0) { return; }
+
+            std::string fakeName = "Airspy HF+ USB";
+            devList.push_back(0xDEADBEEF);
+            devListTxt += fakeName;
             devListTxt += '\0';
         }
-#else
-        // Check for device presence
-        int vid, pid;
-        devFd = backend::getDeviceFD(vid, pid, backend::AIRSPYHF_VIDPIDS);
-        if (devFd < 0) { return; }
-
-        // Get device info
-        std::string fakeName = "Airspy HF+ USB";
-        devList.push_back(0xDEADBEEF);
-        devListTxt += fakeName;
-        devListTxt += '\0';
-#endif
     }
 
     void selectFirst() {
