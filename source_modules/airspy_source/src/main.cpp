@@ -610,9 +610,7 @@ private:
     bool lnaAgc = false;
     bool mixerAgc = false;
 
-#ifdef __ANDROID__
-    int devFd = 0;
-#endif
+    int devFd = -1;
 
     std::vector<uint64_t> devList;
     std::string devListTxt;

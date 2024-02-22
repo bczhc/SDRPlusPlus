@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 project(airspy_source)
 
-add_definitions(-D__ANDROID__)
-
 file(GLOB SRC "src/*.cpp")
 
 include(${SDRPP_MODULE_CMAKE})
