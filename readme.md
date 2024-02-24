@@ -95,7 +95,7 @@ Start Airspy(HF) SDR++ Server in Termux
    ```shell
    mkdir sdrpp-root
    cd sdrpp-root
-   ln -s ../libs .
+   ln -s ../libs modules
    cd
    ```
 
