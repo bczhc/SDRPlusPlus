@@ -3,7 +3,8 @@ SDR++
 
 Start Airspy(HF) SDR++ Server in Termux
 
-<img src="https://github.com/bczhc/SDRPlusPlus/assets/49330580/c59beee9-4340-4e43-8465-36fa8dd39270" style="width: 50%">
+<img src="https://github.com/bczhc/sdrpp-termux/assets/49330580/1b49eae2-2d23-4665-8a24-2d558df6ac0d" style="width: 50%">
+
 
 # Build
 
@@ -106,4 +107,6 @@ Start Airspy(HF) SDR++ Server in Termux
    termux-usb -e './sdrpp -s -r sdrpp-root -p <port> -t <device-type> -d' <usb-path>
    # Example below
    # termux-usb -e './sdrpp -s -r sdrpp-root -p 4000 -t 1 -d' "/dev/bus/usb/002/003"
+
+   # or you can also see the 'usb-run' script if you'd like: https://gist.github.com/bczhc/01e1991db29af67c245ba99f5f888ca2
    ```
