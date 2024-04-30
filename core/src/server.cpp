@@ -178,6 +178,10 @@ namespace server {
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
             conn->close();
+
+            flog::info("Closing the open client...");
+            client->close();
+            client = {};
             
             // Start another async accept
             listener->acceptAsync(_clientHandler, NULL);

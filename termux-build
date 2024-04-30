@@ -43,6 +43,15 @@ cmake .. -G Ninja \
 
 ninja
 
+rm -rf libs 2>/dev/null || true
 mkdir libs
-cp -v ../sdr-kit/arm64-v8a/lib/* libs
-fd --extension=so -HI -x cp -v {} libs
+
+cp -v ../sdr-kit/arm64-v8a/lib/* libs || true
+fd --extension=so -HI -x cp -v {} libs || true
+
+rm -rf root 2>/dev/null || true
+mkdir root
+cd root
+ln -s ../libs modules
+cd ..
+tar -cvz sdrpp libs root -f dist.tgz
