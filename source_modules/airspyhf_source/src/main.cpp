@@ -410,9 +410,7 @@ private:
     float atten = 0.0f;
     std::string selectedSerStr = "";
 
-#ifdef __ANDROID__
     int devFd = 0;
-#endif
 
     std::vector<uint64_t> devList;
     std::string devListTxt;
