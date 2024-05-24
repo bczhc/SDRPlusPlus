@@ -246,19 +246,8 @@ int sdrpp_main(int argc, char* argv[]) {
     defConfig["lockMenuOrder"] = false;
 #endif
 
-#if defined(_WIN32)
-    defConfig["modulesDirectory"] = "./modules";
-    defConfig["resourcesDirectory"] = "./res";
-#elif defined(IS_MACOS_BUNDLE)
-    defConfig["modulesDirectory"] = "../Plugins";
-    defConfig["resourcesDirectory"] = "../Resources";
-#elif defined(__ANDROID__)
     defConfig["modulesDirectory"] = root + "/modules";
     defConfig["resourcesDirectory"] = root + "/res";
-#else
-    defConfig["modulesDirectory"] = INSTALL_PREFIX "/lib/sdrpp/plugins";
-    defConfig["resourcesDirectory"] = INSTALL_PREFIX "/share/sdrpp";
-#endif
 
     // Load config
     flog::info("Loading config");
