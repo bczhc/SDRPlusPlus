@@ -1,12 +1,28 @@
-SDR++
+sdrpp-server
 ===
+
+# Downstream changes
+
+1. Allow run in [Termux](https://termux.dev)
+2. Close the already-connected clients when new connection establishes
+---
+
+# Raspberry Pi
+
+## Build
+
+
+# Termux
 
 Start Airspy(HF) SDR++ Server in Termux
 
 <img src="https://github.com/bczhc/sdrpp-termux/assets/49330580/1b49eae2-2d23-4665-8a24-2d558df6ac0d" style="width: 50%">
 
+## Build
 
-# Build
+```bash
+./rpi-build
+```
 
 1. Clone
 
@@ -86,7 +102,7 @@ Start Airspy(HF) SDR++ Server in Termux
    tar -c sdrpp libs | adb shell run-as "com.termux files/usr/bin/bash -c 'cd files/home; tar -xv'"
    ```
 
-# Run
+## Run
 
 1. Open Termux App
 2. Connect your Airspy(HF) via USB, and grand the permission
