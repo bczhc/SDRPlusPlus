@@ -11,6 +11,9 @@ sdrpp-server
 
 ## Build
 
+```bash
+./rpi-build
+```
 
 # Termux
 
@@ -19,10 +22,6 @@ Start Airspy(HF) SDR++ Server in Termux
 <img src="https://github.com/bczhc/sdrpp-termux/assets/49330580/1b49eae2-2d23-4665-8a24-2d558df6ac0d" style="width: 50%">
 
 ## Build
-
-```bash
-./rpi-build
-```
 
 1. Clone
 
