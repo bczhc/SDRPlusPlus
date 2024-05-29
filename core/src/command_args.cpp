@@ -19,7 +19,7 @@ void CommandArgsParser::defineAll() {
         define('r', "root", "Root directory, where all config files are stored", std::filesystem::absolute(root).string());
         define('s', "server", "Run in server mode");
         define('d', "device", "Airspy device file descriptor", -1);
-        define('t', "type", "Device type: Airspy (0) or Airspy HF+ (1)", 0);
+        define('t', "type", "Device type: Airspy (0) or Airspy HF+ (1), only valid on Android", 0);
         define('\0', "autostart", "Automatically start the SDR after loading");
 }
 
